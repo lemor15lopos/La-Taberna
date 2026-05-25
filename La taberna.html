@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante Bar La Taberna</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* CONFIGURACIÓN DE COLORES LUXURY Y DISEÑO */
+        :root {
+            --bg-dark: #0a0a0c;       /* Fondo ultra oscuro profundo */
+            --bg-surface: #121216;    /* Tarjetas y contenedores */
+            --bg-surface-elev: #1a1a22;/* Elevación de color al hacer hover */
+            --accent: #d4af37;        /* Oro noble premium */
+            --text-main: #f3f4f6;     /* Blanco suave */
+            --text-muted: #9ca3af;    /* Gris elegante para subtítulos */
+            --glass: rgba(18, 18, 22, 0.75);
+            --border: rgba(255, 255, 255, 0.05);
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* RESET GENERAL */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* TIPOGRAFÍA DE TÍTULOS */
+        h1, h2, h3, .logo a {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        /* COMPONENTES REUTILIZABLES */
+        .section-tag {
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        /* NAVBAR CON GLASSMORPHISM */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo a {
+            color: var(--text-main);
+            font-size: 26px;
+            text-decoration: none;
+        }
+
+        .logo a span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.4s var(--transition-smooth);
+            position: relative;
+        }
+
+        .nav-links a:hover, 
+        .nav-links a.active {
+            color: var(--text-main);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.4s var(--transition-smooth);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* HERO SECTION CON IMAGEN LOCAL */
+        .hero {
+            position: relative;
+            height: 95vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            /* Cambia "bar.jpg" por el nombre exacto de tu archivo en tu PC */
+            background: linear-gradient(rgba(10, 10, 12, 0.5), rgba(10, 10, 12, 0.8)), 
+                        url('bar.jpg') no-repeat center center/cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 850px;
+        }
+
+        .hero-badge {
+            background: rgba(214, 175, 55, 0.1);
+            border: 1px solid rgba(214, 175, 55, 0.3);
+            padding: 6px 16px;
+            border-radius: 50px;
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(36px, 6vw, 68px);
+            line-height: 1.1;
+            color: var(--text-main);
+            margin-bottom: 25px;
+        }
+
+        .hero-content p {
+            font-size: clamp(16px, 2vw, 19px);
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            padding: 15px 35px;
+            background-color: var(--accent);
+            color: var(--bg-dark);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(214, 175, 55, 0.3);
+        }
+
+        .btn-secondary {
+            padding: 15px 35px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: background 0.3s, border 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--text-main);
+        }
+
+        /* CONTENEDOR MAESTRO */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 20px;
+        }
+
+        /* SECCIÓN SOBRE NOSOTROS (ASIMÉTRICA) */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image-wrapper {
+            position: relative;
+        }
+
+       .about-img {
+    width: 100%;
+    max-width: 228px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    position: relative;
+    z-index: 2;
+    filter: grayscale(15%) contrast(105%);
+}
+
+.image-accent-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 2px solid var(--accent);
+    top: 20px;
+    left: -20px;
+    border-radius: 8px;
+    z-index: 1;
+}
+
+        .about-text h2 {
+            font-size: clamp(28px, 4vw, 42px);
+            line-height: 1.2;
+            margin-bottom: 25px;
+        }
+
+        .lead-text {
+            font-size: 18px;
+            color: var(--text-main);
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 40px;
+            border-top: 1px solid var(--border);
+            padding-top: 30px;
+        }
+
+        .stat-item h3 {
+            font-size: 32px;
+            color: var(--accent);
+        }
+
+        .stat-item p {
+            margin-bottom: 0;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* SECCIÓN DESTACADOS */
+        .services-section {
+            background-color: var(--bg-surface);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 4vw, 42px);
+            margin-top: 5px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--bg-dark);
+            padding: 50px 40px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: transform 0.4s var(--transition-smooth), background 0.4s, border-color 0.4s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            background-color: var(--bg-surface-elev);
+            border-color: rgba(214, 175, 55, 0.4);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(214, 175, 55, 0.05);
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            transition: background 0.4s;
+        }
+
+        .service-card:hover .card-icon {
+            background: var(--accent);
+        }
+
+        .card-icon i {
+            font-size: 24px;
+            color: var(--accent);
+            transition: color 0.4s;
+        }
+
+        .service-card:hover .card-icon i {
+            color: var(--bg-dark);
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-weight: 300;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* CONTACTO Y UBICACIÓN */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 50px;
+            background-color: var(--bg-surface);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .contact-info-box {
+            padding: 60px;
+        }
+
+        .contact-info-box h2 {
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+
+        .info-details {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .info-icon i {
+            color: var(--accent);
+            font-size: 20px;
+            margin-top: 3px;
+        }
+
+        .info-item h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .info-item p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .social-wrapper {
+            display: flex;
+            gap: 15px;
+            margin-top: 50px;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .social-link:hover {
+            background-color: var(--accent);
+            color: var(--bg-dark);
+            border-color: var(--accent);
+        }
+
+        .contact-map-box iframe {
+            filter: grayscale(100%) invert(92%) contrast(110%); /* Filtro estético para adaptar el mapa al diseño premium */
+        }
+
+        /* FOOTER */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 20px;
+            text-align: center;
+            background-color: var(--bg-dark);
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* DISEÑO RESPONSIVO (MENÚ MÓVIL) */
+        .nav-toggle {
+            display: none;
+            cursor: pointer;
+        }
+
+        .nav-toggle .bar {
+            display: block;
+            width: 25px;
+            height: 2px;
+            margin: 6px auto;
+            background-color: var(--text-main);
+            transition: 0.3s var(--transition-smooth);
+        }
+
+        @media (max-width: 992px) {
+            .about-grid, .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image-wrapper {
+                margin-left: 20px;
+                margin-bottom: 40px;
+            }
+            
+            .contact-map-box {
+                height: 380px;
+            }
+            
+            .contact-info-box {
+                padding: 40px 25px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 20px 6%;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 83px;
+                left: -100%;
+                flex-direction: column;
+                background-color: var(--bg-surface);
+                width: 100%;
+                padding: 40px 0;
+                text-align: center;
+                gap: 25px;
+                transition: 0.4s var(--transition-smooth);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            /* Animación a X en menú hamburguesa */
+            .nav-toggle.is-active .bar:nth-child(2) { opacity: 0; }
+            .nav-toggle.is-active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .nav-toggle.is-active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <a href="#">La Taberna<span>.</span></a>
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#inicio" class="active">Inicio</a></li>
+                <li><a href="#experiencia">Descargar Carta</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="nav-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>BAR RESTAURANTE</h1>
+                <div class="hero-buttons">
+                <a href="#contacto" class="btn-primary">Reservar Mesa</a>
+                <a href="#experiencia" class="btn-secondary">Descubrir Más</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="experiencia" class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image-wrapper">
+                    <div class="image-accent-box"></div>
+                    <img src="QR.png" alt="Interior Exclusivo" class="about-img">
+                    <a href="https://download1338.mediafire.com/tzbzrhzgynbg7vYYM9s4JOFkzHXCZB93XEgIYxo0C0vCt73BSJztWUESFu7Lz68ImFY1ZUZHpH4kNRg_pGkDXFKxWMxydVXHfd0cqtthOFW5kCQROgh6vjNEVyYEg22jwKFrl_PnqVnDRzecegpwET227iL-FK7eRgM74nQI-YBt/4jy6jdf6yub2t0l/Carta.pdf" class="btn-primary" style="text-decoration: none; display: inline-block; position: relative; z-index: 10; margin-top: 20px;">
+                        <i class="fa-solid fa-download"></i> Descargar la carta
+                    </a>
+                </div>
+                <div class="about-text">
+                    <h2>Descubre nuestra carta</h2>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                          <h2><--</h2>
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+                   </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info-box">
+                    <span class="section-tag">Ubicación</span>
+                    <h2>Será un placer recibirte.</h2>
+                    
+                    <div class="info-details">
+                        <div class="info-item">
+                            <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <div>
+                                <h4>Dirección</h4>
+                                <p>Calle Principal de tu Local, Fuengirola, España</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div>
+                                <h4>Reservas Directas</h4>
+                                <p>+34 952 59 11 46</p>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
+                            <div>
+                                <h4>Horario Semanal</h4>
+                                <p>Lunes a Sábados 08:00 - 18:00 | Domingos cerrado</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social-wrapper">
+                        <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fa-brands fa-tripadvisor"></i></a>
+                    </div>
+                </div>
+                
+                <div class="contact-map-box">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d400.3997979838344!2d-4.636577426562349!3d36.597530819034525!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd72e3faf7a5f81b%3A0x5339dcafde5de61c!2sBar%20La%20Taberna!5e0!3m2!1ses!2ses!4v1779697183112!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2026 La Taberna.</p>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenu.classList.toggle('is-active');
+        });
+
+        // Cerrar menú al hacer clic en un enlace
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenu.classList.remove('is-active');
+            });
+        });
+    </script>
+</body>
+</html>
